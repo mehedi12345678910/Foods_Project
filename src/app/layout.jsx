@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { UtensilsCrossed } from "lucide-react";
+import CartProvider from " @/context/CartProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,22 +27,25 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <header className="px-5 py-3 flex justify-between gap-5 bg-black items-center">
-         <Link href='/' className="flex items-center gap-2 group cursor-pointer">
-      {/* Icon Part */}
-      <div className="relative flex items-center justify-center w-12 h-12 bg-orange-500 rounded-xl rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-lg shadow-orange-200">
-        <UtensilsCrossed className="text-white w-7 h-7 -rotate-3 group-hover:rotate-0 transition-transform duration-300" />
-      </div>
+          <Link
+            href="/"
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            {/* Icon Part */}
+            <div className="relative flex items-center justify-center w-12 h-12 bg-orange-500 rounded-xl rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-lg shadow-orange-200">
+              <UtensilsCrossed className="text-white w-7 h-7 -rotate-3 group-hover:rotate-0 transition-transform duration-300" />
+            </div>
 
-      {/* Text Part */}
-      <div className="flex flex-col leading-tight">
-        <h1 className="text-2xl font-black tracking-tighter text-gray-800">
-          TESTY<span className="text-orange-500">FOODS</span>
-        </h1>
-        <span className="text-[10px] uppercase tracking-[3px] font-bold text-gray-400">
-          Delight in every bite
-        </span>
-      </div>
-    </Link>
+            {/* Text Part */}
+            <div className="flex flex-col leading-tight">
+              <h1 className="text-2xl font-black tracking-tighter text-gray-800">
+                TESTY<span className="text-orange-500">FOODS</span>
+              </h1>
+              <span className="text-[10px] uppercase tracking-[3px] font-bold text-gray-400">
+                Delight in every bite
+              </span>
+            </div>
+          </Link>
           {/* <img className="w-23 h-22" src="/logo.png" alt="Food Logo" /> */}
           <div className="space-x-5 ">
             <Link className="btn" href="/foods">
@@ -52,7 +56,9 @@ export default function RootLayout({ children }) {
             </Link>
           </div>
         </header>
-        <main className="px-5 py-8">{children}</main>
+        <main className="px-5 py-8">
+          <CartProvider> {children}</CartProvider>
+        </main>
       </body>
     </html>
   );

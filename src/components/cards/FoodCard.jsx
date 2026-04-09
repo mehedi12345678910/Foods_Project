@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart, Eye } from "lucide-react"; 
 import Link from "next/link";
+import CardButton from "../button/CardButton";
 
 const FoodCard = ({ food }) => {
 const {title,foodImg,category,price,id}=food
@@ -65,12 +66,7 @@ const {title,foodImg,category,price,id}=food
             >
               <Eye size={20} />
             </Link>
-            <button
-              className="flex items-center gap-2 bg-yellow-500 text-white px-5 py-3 rounded-xl font-bold hover:bg-black hover:shadow-lg transition-all active:scale-95"
-            >
-              <ShoppingCart size={18} />
-              Add
-            </button>
+              <CardButton food={food}/>     
           </div>
         </div>
       </div>
