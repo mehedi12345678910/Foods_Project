@@ -5,10 +5,17 @@ import InputSearch from " @/components/InputSearch";
 const getFoods = async (search) => {
   const res = await fetch(
     `https://taxi-kitchen-api.vercel.app/api/v1/foods/random?search=${search}`,
+    {next:{revalidate:10}}
   );
   const data = await res.json();
   await new Promise((resolve) => setTimeout(resolve));
   return data.foods || [];
+};
+
+// ata dile upor er title paltabe 
+export const metadata = {
+  title: "All Food",
+  description: "Foods sell and buy ${dollar}",
 };
 
 const FoodsPage = async ({ searchParams }) => {
