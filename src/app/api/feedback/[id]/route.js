@@ -1,13 +1,62 @@
-import { feedback } from "../../route";
+import { connect } from " @/app/lib/dbConnect";
+import { ObjectId } from "mongodb";
+const feedbackCollection = connect("feedbacks");
 
+export async function GET(request, { params }) {
+  const { id } = await params;
+  if (id.length != 24) {
+    return Response.json({
+      status: 400,
+      message: "send correct _id",
+    });
+  }
+  const query = { _id: new ObjectId(id) };
+  const result = await feedbackCollection.findOne(query);
 
-export async function GET(request ,{params}) {
- const {id}=await params;
-
- const singleFeedback=feedback.find(fd=>fd.id==id)||{};
-
- return Response.json(singleFeedback)
+  return Response.json(result);
 }
 
-// ata hocce feedback/1,2 te jodi jaite chai to 
-// 70.4 start
+// ata hocce feedback/1,2 te jodi jaite chai to
+// delete er jonno || shudu copy kore jeta korte chacco seta koro
+
+export async function DELETE(request, { params }) {
+  const { id } = await params;
+  if (id.length != 24) {
+    return Response.json({
+      status: 400,
+      message: "send correct _id",
+    });
+  }
+  const query = { _id: new ObjectId(id) };
+  const result = await feedbackCollection.deleteOne(query);
+
+  return Response.json(result);
+}
+// Update
+
+export async function PATCH(request, { params }) {
+  const { id } = await params;
+  const { message } = await request.json();
+  if (id.length != 24) {
+    return Response.json({
+      status: 400,
+      message: "send correct _id",
+    });
+  }
+  if (!message || typeof message !== "string") {
+    return Response.json({
+      status: 400,
+      message: "please send a message",
+    });
+  }
+  const query = { _id: new ObjectId(id) };
+  const newData = {
+    $set: {
+      message,
+    },
+  };
+  const result = await feedbackCollection.updateOne(query,newData);
+
+  return Response.json(result);
+}
+// 71.5 start
