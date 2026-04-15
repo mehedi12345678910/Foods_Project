@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import React from "react";
 
 export function generateStaticParams(){
@@ -18,8 +19,9 @@ const Page = async ({ params }) => {
   const { id } = await params; 
   const food = await getSingleFood(id);
 
-  if (!food) {
-    return <h2 className="text-center text-red-500 text-2xl mt-10">Food not Found</h2>;
+  if (!food.title) {
+    redirect('/foods')
+    // return <h2 className="text-center text-red-500 text-2xl mt-10">Food not Found</h2>;
   }
 
   return (
